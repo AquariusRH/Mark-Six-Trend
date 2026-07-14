@@ -38,6 +38,7 @@ from .tab_gaps import GapsTab
 from .tab_saved import SavedTab
 from .tab_smartpick import SmartPickTab
 from .tab_trend import TrendTab
+from .tab_prediction import PredictionTab
 from ..strings import get_lang, lang_button_label, other_lang, set_lang
 from .widgets import BrandHeader, FilterBar
 
@@ -135,6 +136,7 @@ class MainWindow(QMainWindow):
         self.gaps = GapsTab()
         self.distribution = DistributionTab()
         self.trend = TrendTab()
+        self.prediction = PredictionTab(self.db)
         self.smartpick = SmartPickTab(self.db)
         self.saved = SavedTab(self.db)
         self.data = DataTab(self.db)
@@ -146,6 +148,7 @@ class MainWindow(QMainWindow):
         self.tabs.addTab(self.gaps, s("tab_gaps"))
         self.tabs.addTab(self.distribution, s("tab_distribution"))
         self.tabs.addTab(self.trend, s("tab_trend"))
+        self.tabs.addTab(self.prediction, s("tab_prediction"))
         self.tabs.addTab(self.smartpick, s("tab_smartpick"))
         self.tabs.addTab(self.saved, s("tab_saved"))
         self.tabs.addTab(self.data, s("tab_data"))
@@ -201,7 +204,7 @@ class MainWindow(QMainWindow):
             date_to=params["date_to"],
         )
         for tab in (self.dashboard, self.frequency, self.gaps,
-                    self.distribution, self.trend, self.smartpick,
+                    self.distribution, self.trend, self.prediction, self.smartpick,
                     self.saved, self.data):
             tab.set_data(filtered, params)
         self._update_status()
